@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vertretungsplan</title>
+		<link rel="icon" type="image/png" href="willms2.png">
+		<meta charset=utf-8 />
+		<meta name="theme-color" content="#000000">
+		<link rel=stylesheet href=index.css type=text/css />
+		<!--jquerymobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="j.mobile/jquery.mobile-1.4.5.min.css">
+		<script src="j.mobile/jquery-1.11.2.min.js"></script>
+		<script src="j.mobile/jquery.mobile-1.4.5.min.js"></script>
+		<script type=text/javascript src=vtp.js ></script>
+	</head>
+	<body>
+		<div id=main >
+			<div data-role="page" id="pageone" data-theme="b">
+				<div data-role="header" data-position="fixed">
+					<h1>Vertretungsplan</h1> 	
+					<a href="#search" class="ui-btn ui-shadow ui-icon-search ui-btn-icon-left ui-corner-all">Suchen</a>
+					<a href="http://www.willms-gymnasium.de/" class="ui-btn ui-btn-icon-left ui-corner-all">Willms</a>
+				</div>
+				<div data-role="panel" id="search" data-theme="b">
+				<h2>Suche:</h2>
+				<form>
+				<input id="suche" data-type="search" data-theme="a">
+				</form>
+				</div>
+		<div data-role="main" class="ui-content">
+			<div data-role="collapsible" data-collapsed="false" class=vtp id=day1 >
+				<h2>Montag</h2>
+				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="false" data-theme="a">
+				<li>Sd 1/2 Std vert für Kl</li>
+				<li>Km 5/6 Std entfällt</li>
+				<li>Wo 11*/12* 7/8 Std entfällt</li>
+				<li>-</li>
+				<li>-</li>
+				</ul>
+			</div>
+			<div data-role="collapsible" data-collapsed="true" class=vtp id=day2 >
+				<h2>Dienstag</h2>
+				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="false" data-theme="a">
+				<li>Test</li>
+				<li>-</li>
+				<li>-</li>
+				<li>-</li>
+				<li>-</li>
+				</ul>
+			</div>
+			<div data-role="collapsible" data-collapsed="true" class=vtp id=day3 >
+				<h2>Mittwoch</h2>
+				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="false" data-theme="a">
+				<li>Nm 5/6 Std Vert. für Ko</li>
+				<li>Sd 3/4 std entfällt</li>
+				<li>Test Test Test</li>
+				<li>-</li>
+				<li>-</li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+		<div data-role="collapsible" data-collapsed="true" id="hinweis">
+		<h2>Zusätzliche Informationen</h2>
+		<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="false" data-theme="b">
+		<li>Heute:Russisch-AG Gruppe A</li>
+		<li>Heute:Q1/Q2-Sportkursbewertung(Kf) </li>
+		<li>nach der 6. Stunde-A2 </li>
+		<li>Morgen:AGs in folgende Räume:</li>
+		<li>Jg.6-English-A20;Jg.5-English-A27 </li>
+		</ul>
+		</div>
+		</div>
+	</body>
+</html>

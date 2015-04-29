@@ -1,0 +1,30 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #252525;
+}
+
+
+
+#main {
+}
+
+@media screen {
+	.vtp {
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.vtp {
+		float: left;
+		width: 33%;
+		height: 100%;
+	}
+
+}
+
+#hinweis
+{
+	margin: 0 auto;
+	margin-top:2x;
+}
