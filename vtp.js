@@ -1,3 +1,4 @@
+/// <reference path="../typings/jquery/jquery.d.ts"/>
 $(document).ready(function() {
 
   if (navigator.userAgent.match(/Android/i)) {
@@ -23,5 +24,15 @@ $( document ).on( "pageinit", "#pageone", function() {
                 $( "#search" ).panel( "open" );
             }
         }
+    });
+});
+
+$.getJSON('http://anyorigin.com/dev/get?url=http%3A//intern.willms-gymnasium.de/vtp/json.php&callback=?', function(data){
+    var table_obj = $('table');
+    $.each(data, function(index, item){
+         var table_row = $('<tr>', {id: item.id});
+         var table_cell = $('<td>', {html: item.data});
+         table_row.append(table_cell);
+         table_obj.append(table_row);
     });
 });
