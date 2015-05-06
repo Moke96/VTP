@@ -1,6 +1,5 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
 $(document).ready(function() {
-
   if (navigator.userAgent.match(/Android/i)) {
     window.scrollTo(0,0); // reset in case prev not scrolled  
     var nPageH = $(document).height();
@@ -27,7 +26,7 @@ $( document ).on( "pageinit", "#pageone", function() {
     });
 });
 
-$.getJSON('http://anyorigin.com/dev/get?url=http%3A//intern.willms-gymnasium.de/vtp/json.php&callback=?', function(data){
+$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', function(data){
     var table_obj = $('table');
     $.each(data, function(index, item){
          var table_row = $('<tr>', {id: item.id});
@@ -36,3 +35,25 @@ $.getJSON('http://anyorigin.com/dev/get?url=http%3A//intern.willms-gymnasium.de/
          table_obj.append(table_row);
     });
 });
+
+function getVtpData() {
+	var vtpdata;
+	//load data from server
+	vtpdata = $.getJSON('http://intern.willms-gymnasium.de/vtp/json.php');
+	return vtpdata;
+};
+
+function showVtpData() {
+	cday = getDay(1);
+	cday.innerHTML = "123";
+	return cday;
+}
+
+function getDay(n) {
+	return $('#day' + n);
+}
+
+function getNotice() {
+	return $('#hinweis');
+}
+
