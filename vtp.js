@@ -26,7 +26,8 @@ $( document ).on( "pageinit", "#pageone", function() {
     });
 });
 
-$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', function(data){
+/*$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', 
+function(data){
     var table_obj = $('table');
     $.each(data, function(index, item){
          var table_row = $('<tr>', {id: item.id});
@@ -34,19 +35,26 @@ $.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', function(data){
          table_row.append(table_cell);
          table_obj.append(table_row);
     });
-});
+});*/
 
-function getVtpData() {
-	var vtpdata;
-	//load data from server
-	vtpdata = $.getJSON('http://intern.willms-gymnasium.de/vtp/json.php');
-	return vtpdata;
+function updateVtp() {
+	$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', showVtpData);
 };
 
-function showVtpData() {
-	cday = getDay(1);
-	cday.innerHTML = "123";
-	return cday;
+function showVtpData(d) {
+	for (var day = 1; day <=3; day++) {
+		var cday = getDay(day);
+		console.log(d);
+		cday.children()[0].innerHTML = d.vertretungen[day-1].datum;
+		data = d.vertretungen[day-1].daten;
+		console.log(data.length)
+		cday.children()[1].innerHTML = "<ul data-role=\"listview\" data-filter=\"true\" data-input=\"#suche\" data-inset=\"false\" data-theme=\"a\" class=\"ui-group-theme-a ui-listview\">";
+		for (var i = 0; i < data.length; i++) {
+			cday.children()[1].innerHTML += "<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>";
+		}
+		 cday.children()[1].innerHTML += "</ul>"
+	}
+	console.log(cday.children().children());
 }
 
 function getDay(n) {
