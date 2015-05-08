@@ -48,11 +48,12 @@ function showVtpData(d) {
 		cday.children()[0].innerHTML = d.vertretungen[day-1].datum;
 		data = d.vertretungen[day-1].daten;
 		console.log(data.length)
-		cday.children()[1].innerHTML = "<ul data-role=\"listview\" data-filter=\"true\" data-input=\"#suche\" data-inset=\"false\" data-theme=\"a\" class=\"ui-group-theme-a ui-listview\">";
+		var html = "<ul data-role=\"listview\" data-filter=\"true\" data-input=\"#suche\" data-inset=\"false\" data-theme=\"a\" class=\"ui-group-theme-a ui-listview\">";
 		for (var i = 0; i < data.length; i++) {
-			cday.children()[1].innerHTML += "<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>";
+			html += "<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>";
 		}
-		 cday.children()[1].innerHTML += "</ul>"
+		 html += "</ul>"
+		 cday.children()[1].innerHTML = html;
 	}
 	console.log(cday.children().children());
 }
