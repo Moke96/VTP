@@ -15,9 +15,9 @@ $(document).ready(function() {
 
 $( document ).on( "pageinit", "#pageone", function() {
     $( document ).on( "swipeleft swiperight", "#pageone", function( e ) {
-        // We check if there is no open panel on the page because otherwise
-        // a swipe to close the left panel would also open the right panel (and v.v.).
-        // We do this by checking the data that the framework stores on the page element (panel: open).
+        // Hier überprüfen wir ob ein bespielsweise linkes Panel bereits offen ist, ansonsten würde
+	    // sich das rechte Panel beim Schließen des linken Panels durch ein Swipe mit öffnen.
+        // Dabei verwenden wir die Daten aus dem framework und überprüfen durch (panel: open).
         if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
            if ( e.type === "swiperight" ) {
                 $( "#search" ).panel( "open" );
@@ -25,7 +25,8 @@ $( document ).on( "pageinit", "#pageone", function() {
         }
     });
 });
-
+// Hier holen wir die Daten für den Vertretungsplan von der vorgegebenen 
+// Internetseite und fügen sie in die Tabelle ein.
 /*$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', 
 function(data){
     var table_obj = $('table');
