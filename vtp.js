@@ -38,7 +38,7 @@ function(data){
 });*/
 
 function updateVtp() {
-	$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', showVtpData);
+	$.getJSON('json.php', showVtpData);
 };
 
 function showVtpData(d) {
