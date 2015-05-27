@@ -48,7 +48,6 @@ function showVtpData(d) {
 		console.log(d);
 		cday.children()[0].innerHTML = d.vertretungen[day-1].datum;
 		data = d.vertretungen[day-1].daten;
-		console.log(data.length)
 		var html = "<ul data-role=\"listview\" data-filter=\"true\" data-input=\"#suche\" data-inset=\"false\" data-theme=\"a\" class=\"ui-group-theme-a ui-listview\">";
 		for (var i = 0; i < data.length; i++) {
 			html += "<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>";
@@ -57,6 +56,9 @@ function showVtpData(d) {
 		 cday.children()[1].innerHTML = html;
 	}
 	console.log(cday.children().children());
+	
+	getNotice().children()[1].innerHTML = d.vertretungen[3].Info //Info ist einfach der 4te Tag im array
+	
 }
 
 function getDay(n) {
