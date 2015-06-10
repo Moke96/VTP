@@ -8,14 +8,17 @@ include('./inc/simple_html_dom.php');
 $VTP = Array( 
 		"vertretungen" => Array(
 			"tag1" => Array(
+				"fehlend" => "",
 				"datum" => "",
 				"daten" => Array()
 			),
 			"tag2" => Array(
+				"fehlend" => "",
 				"datum" => "",
 				"daten" => Array()
 			),
 			"tag3" => Array(
+				"fehlend" => "",
 				"datum" => "",
 				"daten" => Array()
 			)
@@ -59,10 +62,18 @@ foreach($html->find('tr') as $zeile) {
 		$VTP["vertretungen"]["tag3"]["datum"] =
 		str_replace('&nbsp','',$zeile->find('td',2)->plaintext);
 	}
+	if ($i == 1) {
+		$VTP["vertretungen"]["tag1"]["fehlend"] =
+		str_replace('&nbsp','',$zeile->find('td',0)->plaintext);
+		$VTP["vertretungen"]["tag2"]["fehlend"] =
+		str_replace('&nbsp','',$zeile->find('td',1)->plaintext);
+		$VTP["vertretungen"]["tag3"]["fehlend"] =
+		str_replace('&nbsp','',$zeile->find('td',2)->plaintext);
+	}
 	if ($i++ <= 2) continue;
 	for ($j = 0; $j < $days; $j++) {
 		$temp = $zeile->find('td',$j);
-		if (trim($temp->plaintext) <> '.') 
+		if (trim($temp->plaintext) <> '.')
 			array_push($VTP["vertretungen"]["tag".($j+1)]["daten"], str_replace('&nbsp','',$temp->plaintext));
 	}
 }
