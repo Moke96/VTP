@@ -2,24 +2,32 @@
 //Original von Jochen Hillenstedt 10.12.2014
 //Aenderungen von Jan Tatje
 
+// This really is utf8 json. Tell the browser.
+header("Content-Type: application/json; charset=utf-8");
+//CORS header
+header("Access-Control-Allow-Origin: *");
+
 // Hilfsmodul "simple html dom" einbinden (Auswerten des DOM)
 include('./inc/simple_html_dom.php');
 
 $VTP = Array( 
 		"vertretungen" => Array(
 			"tag1" => Array(
-				"fehlend" => "",
 				"datum" => "",
+				"fehlende_lehrer" => "",
+				"fehlende_klassen" => "",
 				"daten" => Array()
 			),
 			"tag2" => Array(
-				"fehlend" => "",
 				"datum" => "",
+				"fehlende_lehrer" => "",
+				"fehlende_klassen" => "",
 				"daten" => Array()
 			),
 			"tag3" => Array(
-				"fehlend" => "",
 				"datum" => "",
+				"fehlende_lehrer" => "",
+				"fehlende_klassen" => "",
 				"daten" => Array()
 			)
 		),
@@ -53,29 +61,30 @@ curl_close($curl);
 $html = str_get_html($vtp_str);
 //Tabelle durcharbeiten mit simple html dom und in Listen umwandeln
 $i = 0;
-foreach($html->find('tr') as $zeile) {
-	if ($i == 2) {
-		$VTP["vertretungen"]["tag1"]["datum"] =
-		str_replace('&nbsp','',$zeile->find('td',0)->plaintext);
-		$VTP["vertretungen"]["tag2"]["datum"] =
-		str_replace('&nbsp','',$zeile->find('td',1)->plaintext);
-		$VTP["vertretungen"]["tag3"]["datum"] =
-		str_replace('&nbsp','',$zeile->find('td',2)->plaintext);
-	}
-	if ($i == 1) {
-		$VTP["vertretungen"]["tag1"]["fehlend"] =
-		str_replace('&nbsp','',$zeile->find('td',0)->plaintext);
-		$VTP["vertretungen"]["tag2"]["fehlend"] =
-		str_replace('&nbsp','',$zeile->find('td',1)->plaintext);
-		$VTP["vertretungen"]["tag3"]["fehlend"] =
-		str_replace('&nbsp','',$zeile->find('td',2)->plaintext);
-	}
-	if ($i++ <= 2) continue;
+foreach($html->find('tr') as $line) {
+	if ($i == 2)
+		for ($j = 0; $j < $days; $j++) {
+			$VTP["vertretungen"]["tag".(1+$j)]["datum"] =
+				str_replace('&nbsp','',$line->find('td',$j)->plaintext);
+		}
+	if ($i == 1)
+		for ($j = 0; $j < $days; $j++) {
+			$VTP["vertretungen"]["tag".(1+$j)]["fehlende_lehrer"] =
+				str_replace('&nbsp','',$line->find('td',$j)->plaintext);
+		}
+	if ($i++ <= 2)
+		continue;
+	
 	for ($j = 0; $j < $days; $j++) {
-		$temp = $zeile->find('td',$j);
-		if (trim($temp->plaintext) <> '.')
-			array_push($VTP["vertretungen"]["tag".($j+1)]["daten"], str_replace('&nbsp','',$temp->plaintext));
+		$tmp = $line->find('td',$j);
+		if (trim($tmp->plaintext) <> '.')
+			array_push($VTP["vertretungen"]["tag".($j+1)]["daten"],
+				str_replace('&nbsp','',$tmp->plaintext));
 	}
+}
+
+for ($j = 0; $j < $days; $j++) {
+		$VTP["vertretungen"]["tag".($j+1)]["fehlende_klassen"] = "not implemented";
 }
 
 //Inhalt des Infofensters auslesen
@@ -86,9 +95,6 @@ $memotext = str_replace(chr(34), chr(39), $memotext); // what does this do???
 $memotext = trim($memotext);
 
 $VTP["info"] = strip_tags($memotext);
-
-//CORS header setzen
-header("Access-Control-Allow-Origin: *");
 
 //Daten-Ausgabe
 $json = json_encode($VTP, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
