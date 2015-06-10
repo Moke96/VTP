@@ -13,7 +13,8 @@ $(document).ready(function() {
 
 });
 
-$( document ).on( "pageinit", "#pageone", function() {
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ $( document ).on( "pageinit", "#pageone", function() {
     $( document ).on( "swipeleft swiperight", "#pageone", function( e ) {
         // Hier überprüfen wir ob ein bespielsweise linkes Panel bereits offen ist, ansonsten würde
 	    // sich das rechte Panel beim Schließen des linken Panels durch ein Swipe mit öffnen.
@@ -25,6 +26,8 @@ $( document ).on( "pageinit", "#pageone", function() {
         }
     });
 });
+}
+
 // Hier holen wir die Daten für den Vertretungsplan von der vorgegebenen 
 // Internetseite und fügen sie in die Tabelle ein.
 /*$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', 
