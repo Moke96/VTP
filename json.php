@@ -62,36 +62,48 @@ $html = str_get_html($vtp_str);
 //Tabelle durcharbeiten mit simple html dom und in Listen umwandeln
 $i = 0;
 foreach($html->find('tr') as $line) {
+	//Third line is date (counts from 0)
 	if ($i == 2)
 		for ($j = 0; $j < $days; $j++) {
 			$VTP["vertretungen"]["tag".(1+$j)]["datum"] =
 				str_replace('&nbsp','',$line->find('td',$j)->plaintext);
 		}
+	//second line is missing teachers
 	if ($i == 1)
 		for ($j = 0; $j < $days; $j++) {
 			$VTP["vertretungen"]["tag".(1+$j)]["fehlende_lehrer"] =
 				str_replace('&nbsp','',$line->find('td',$j)->plaintext);
 		}
+	//do not add these first lines to the array, they have their own
 	if ($i++ <= 2)
 		continue;
 	
+	//add every non empty cell to the corresponding array
 	for ($j = 0; $j < $days; $j++) {
 		$tmp = $line->find('td',$j);
-		if (trim($tmp->plaintext) <> '.')
+		if (trim($tmp->plaintext) <> '.' && !empty(trim($tmp->plaintext)))
 			array_push($VTP["vertretungen"]["tag".($j+1)]["daten"],
 				str_replace('&nbsp','',$tmp->plaintext));
 	}
 }
 
+//
 for ($j = 0; $j < $days; $j++) {
-		$VTP["vertretungen"]["tag".($j+1)]["fehlende_klassen"] = "not implemented";
+		$tmp = array_pop($VTP["vertretungen"]["tag".($j+1)]["daten"]);
+		if($tmp == "fehlende klassen:") {
+			$VTP["vertretungen"]["tag".($j+1)]["fehlende_klassen"] = "Keine";
+			continue;
+		} else {
+			$VTP["vertretungen"]["tag".($j+1)]["fehlende_klassen"] = $tmp;
+			array_pop($VTP["vertretungen"]["tag".($j+1)]["daten"]);
+		}
 }
 
 //Inhalt des Infofensters auslesen
 $html = str_get_html($info_str);
 $memotext = $html->find('html',0)->innertext;
 $memotext = str_replace("\r\n", "", $memotext);
-$memotext = str_replace(chr(34), chr(39), $memotext); // what does this do???
+$memotext = str_replace(chr(34), chr(39), $memotext);
 $memotext = trim($memotext);
 
 $VTP["info"] = strip_tags($memotext);
