@@ -28,40 +28,31 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 });
 }
 
-// Hier holen wir die Daten für den Vertretungsplan von der vorgegebenen 
-// Internetseite und fügen sie in die Tabelle ein.
-/*$.getJSON('http://intern.willms-gymnasium.de/vtp/json.php', 
-function(data){
-    var table_obj = $('table');
-    $.each(data, function(index, item){
-         var table_row = $('<tr>', {id: item.id});
-         var table_cell = $('<td>', {html: item.data});
-         table_row.append(table_cell);
-         table_obj.append(table_row);
-    });
-});*/
-
 function updateVtp() {
 	$.getJSON('json.php', showVtpData);
 };
 
+//call updateVtp automatically
+updateVtp();
+
 function showVtpData(d) {
 	for (var day = 1; day <=3; day++) {
 		var cday = getDay(day);
-		console.log(d);
-		cday.children()[0].innerHTML = d.vertretungen[day-1].datum;
-		data = d.vertretungen[day-1].daten;
+		cday.children()[0].innerHTML = d.vertretungen['tag'+day].datum;
+		data = d.vertretungen['tag'+day].daten;
 		var html = "<ul data-role=\"listview\" data-filter=\"true\" data-input=\"#suche\" data-inset=\"false\" data-theme=\"a\" class=\"ui-group-theme-a ui-listview\">";
 		for (var i = 0; i < data.length; i++) {
 			html += "<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>";
 		}
-		 html += "</ul>"
-		 cday.children()[1].innerHTML = html;
+		html += "<li class=\"ui-li-static ui-body-inherit\">Fehlende Lehrer:</li>";
+		html += "<li class=\"ui-li-static ui-body-inherit\">" + d.vertretungen['tag'+day].fehlende_lehrer + "</li>";
+		html += "<li class=\"ui-li-static ui-body-inherit\">Fehlende Klassen:</li>";
+		html += "<li class=\"ui-li-static ui-body-inherit\">" + d.vertretungen['tag'+day].fehlende_klassen + "</li>";
+		html += "</ul>"
+		cday.children()[1].innerHTML = html;
 	}
-	console.log(cday.children().children());
 	
-	getNotice().children()[1].innerHTML = d.vertretungen[3].Info //Info ist einfach der 4te Tag im array
-	
+    getNotice().children()[1].innerHTML = d.info;
 }
 
 function getDay(n) {
@@ -69,6 +60,6 @@ function getDay(n) {
 }
 
 function getNotice() {
-	return $('#hinweis');
+  	return $('#hinweis');
 }
 
