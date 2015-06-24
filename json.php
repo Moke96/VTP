@@ -7,6 +7,8 @@ header("Content-Type: application/json; charset=utf-8");
 //CORS header
 header("Access-Control-Allow-Origin: *");
 
+include('./login');
+
 // Hilfsmodul "simple html dom" einbinden (Auswerten des DOM)
 include('./inc/simple_html_dom.php');
 
@@ -38,10 +40,6 @@ $VTP = Array(
 $src_charset = "Windows-1252";
 //other
 $days = 3;
-
-//Username und Password 
-$username = 'schueler@willms';
-$password = 'SpiegleinGmbH';
 
 // Daten einlesen mit cURL
 // direktes Einlesen ist auf diesem Server nicht möglich
