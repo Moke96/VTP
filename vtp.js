@@ -33,23 +33,24 @@ function updateVtp() {
 };
 
 //call updateVtp automatically
-updateVtp();
+document.onLoad = function() {
+	updateVtp();
+}
 
 function showVtpData(d) {
 	for (var day = 1; day <=3; day++) {
 		var cday = getDay(day);
 		cday.children()[0].innerHTML = d.vertretungen['tag'+day].datum;
 		data = d.vertretungen['tag'+day].daten;
-		var html = "<ul data-role=\"listview\" data-filter=\"true\" data-input=\"#suche\" data-inset=\"false\" data-theme=\"a\" class=\"ui-group-theme-a ui-listview\">";
-		for (var i = 0; i < data.length; i++) {
-			html += "<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>";
+		$('#day' + day + " ul li").remove();
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit ui-first-child\">" + data[0] + "</li>");
+		for (var i = 1; i < data.length; i++) {
+			$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>");
 		}
-		html += "<li class=\"ui-li-static ui-body-inherit\">Fehlende Lehrer:</li>";
-		html += "<li class=\"ui-li-static ui-body-inherit\">" + d.vertretungen['tag'+day].fehlende_lehrer + "</li>";
-		html += "<li class=\"ui-li-static ui-body-inherit\">Fehlende Klassen:</li>";
-		html += "<li class=\"ui-li-static ui-body-inherit\">" + d.vertretungen['tag'+day].fehlende_klassen + "</li>";
-		html += "</ul>"
-		cday.children()[1].innerHTML = html;
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">Fehlende Lehrer:</li>");
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">" + d.vertretungen['tag'+day].fehlende_lehrer + "</li>");
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">Fehlende Klassen:</li>");
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit ui-last-child\">" + d.vertretungen['tag'+day].fehlende_klassen + "</li>");
 	}
 	
     getNotice().children()[1].innerHTML = d.info;
