@@ -33,7 +33,8 @@ $VTP = Array(
 				"daten" => Array()
 			)
 		),
-		"info" => ""
+		"info" => "",
+		"letzte_aktualisierung" => ""
 );
 
 //encoding
@@ -95,6 +96,15 @@ for ($j = 0; $j < $days; $j++) {
 			$VTP["vertretungen"]["tag".($j+1)]["fehlende_klassen"] = $tmp;
 			array_pop($VTP["vertretungen"]["tag".($j+1)]["daten"]);
 		}
+}
+
+//letzte aktualisierung
+$tmp = $html->plaintext;
+$matches = Array();
+if (preg_match("/Letzte\s.+M/", $tmp, $matches)){
+	$VTP["letzte_aktualisierung"] = mb_substr($matches[0],17);
+} else {
+	$VTP["letzte_aktualisierung"] = "unbekannt";
 }
 
 //Inhalt des Infofensters auslesen
