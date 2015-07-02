@@ -1,17 +1,16 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
-$(document).ready(function() {
-  if (navigator.userAgent.match(/Android/i)) {
-    window.scrollTo(0,0); // reset in case prev not scrolled  
-    var nPageH = $(document).height();
-    var nViewH = window.outerHeight;
-    if (nViewH > nPageH) {
-      nViewH -= 250;
-      $('BODY').css('height',nViewH + 'px');
-    }
-    window.scrollTo(0,1);
-  }
-
-});
+// if (navigator.userAgent.match(/Android/i)) {
+    //window.scrollTo(0,0); // reset in case prev not scrolled  
+    //var nPageH = $(document).height();
+    //var nViewH = window.outerHeight;
+    //if (nViewH > nPageH) {
+      //nViewH -= 250;
+      //$('BODY').css('height',nViewH + 'px');
+    //}
+   // window.scrollTo(0,1);
+  //}
+//
+//});
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
  $( document ).on( "pageinit", "#pageone", function() {
@@ -47,11 +46,12 @@ function showVtpData(d) {
 		for (var i = 1; i < data.length; i++) {
 			$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">" + data[i] + "</li>");
 		}
-		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">Fehlende Lehrer:</li>");
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\"><span style=color:#ff0000;>Fehlende Lehrer:</span></li>");
 		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">" + d.vertretungen['tag'+day].fehlende_lehrer + "</li>");
-		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\">Fehlende Klassen:</li>");
+		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit\"><span style=color:#0000ff;>Fehlende Klassen:</span></li>");
 		$('#day' + day + " ul").append("<li class=\"ui-li-static ui-body-inherit ui-last-child\">" + d.vertretungen['tag'+day].fehlende_klassen + "</li>");
-	}
+	 
+    }
 	
     getNotice().children()[1].innerHTML = d.info;
 }
@@ -63,4 +63,5 @@ function getDay(n) {
 function getNotice() {
   	return $('#hinweis');
 }
+
 
