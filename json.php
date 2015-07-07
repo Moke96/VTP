@@ -102,7 +102,7 @@ for ($j = 0; $j < $days; $j++) {
 $tmp = $html->plaintext;
 $matches = Array();
 if (preg_match("/Letzte\s.+M/", $tmp, $matches)){
-	$VTP["letzte_aktualisierung"] = mb_substr($matches[0],17);
+	$VTP["letzte_aktualisierung"] = mb_substr($matches[0],16);
 } else {
 	$VTP["letzte_aktualisierung"] = "unbekannt";
 }
