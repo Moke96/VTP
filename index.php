@@ -23,9 +23,9 @@
 
 
 	function show_fehlend($vtp, $day) {
-		echo "<li>Fehlende Lehrer:</li>";
+		echo "<h4>Fehlende Lehrer:</h4>";
 		echo "<li>".$vtp["vertretungen"]["tag".$day]["fehlende_lehrer"]."</li>";
-		echo "<li>Fehlende Klassen:</li>";
+		echo "<h5>Fehlende Klassen:</h5>";
 		echo "<li>".$vtp["vertretungen"]["tag".$day]["fehlende_klassen"]."</li>";
 	}
 
@@ -58,7 +58,6 @@
 				</div>
 				<div data-role="panel" id="search" data-theme="b">
 				<h2>Suche:</h2>
-				  <paper-ripple fit> </paper-ripple>
 				<form>
 				<input id="suche" data-type="search" data-theme="a">
 				</form>
@@ -66,7 +65,7 @@
 		<div data-role="main" class="ui-content">
 			<div data-role="collapsible" data-collapsed="false" class=vtp id=day1 >
 				<h2><?php echo $vtp["vertretungen"]["tag1"]["datum"]; ?></h2>
-			 	<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
+			 	<ul  data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
 					<?php daten_to_list($vtp, 1); ?>
 				</ul>
 				<ul data-role="listview" data-inset="true" data-theme="a">
