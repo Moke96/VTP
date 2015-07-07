@@ -1,4 +1,39 @@
-﻿<!DOCTYPE html>
+﻿<?php
+	/* PHP vertretungsplan generator
+	 * AKA "If you can't fix the problem engineer around it"
+	 */
+
+	/*some functions reused in the rest of the program*/
+	function daten_to_list($vtp, $day) {
+		$a = $vtp["vertretungen"]["tag".$day]["daten"];
+		foreach ($a as $d) {
+			echo "<li>$d</li>\n";
+		}
+		if (true) { //disable this if you do not care about all days having the
+					//same height
+			$longest = 0;
+			for ($i = 1; $i <= 3; $i++)
+				if ($longest < count($vtp["vertretungen"]["tag".$i]["daten"]))
+					$longest = count($vtp["vertretungen"]["tag".$i]["daten"]);
+			for ($i = 0; count($vtp["vertretungen"]["tag".$day]["daten"])+$i <
+				$longest; $i++ )
+				echo "<li> </li>\n";
+		}
+	}
+
+
+	function show_fehlend($vtp, $day) {
+		echo "<li>Fehlende Lehrer:</li>";
+		echo "<li>".$vtp["vertretungen"]["tag".$day]["fehlende_lehrer"]."</li>";
+		echo "<li>Fehlende Klassen:</li>";
+		echo "<li>".$vtp["vertretungen"]["tag".$day]["fehlende_klassen"]."</li>";
+	}
+
+	/*pageinit*/
+	include_once "./vtp.php";
+	$vtp = get_vtp();
+?>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Vertretungsplan</title>
@@ -12,7 +47,6 @@
 		<link rel="stylesheet" href="j.mobile/jquery.mobile-1.4.5.min.css">
 		<script src="j.mobile/jquery-1.11.2.min.js"></script>
 		<script src="j.mobile/jquery.mobile-1.4.5.min.js"></script>
-		<script type=text/javascript src=vtp.js ></script>
 	</head>
 	<body>
 		<div id=main >
@@ -24,37 +58,37 @@
 				</div>
 				<div data-role="panel" id="search" data-theme="b">
 				<h2>Suche:</h2>
-				  <paper-ripple fit></paper-ripple>
+				  <paper-ripple fit> </paper-ripple>
 				<form>
 				<input id="suche" data-type="search" data-theme="a">
 				</form>
 				</div>
 		<div data-role="main" class="ui-content">
 			<div data-role="collapsible" data-collapsed="false" class=vtp id=day1 >
-				<h2>Montag</h2>
+				<h2><?php echo $vtp["vertretungen"]["tag1"]["datum"]; ?></h2>
 			 	<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
-					<li>Nicht geladen.</li>
+					<?php daten_to_list($vtp, 1); ?>
 				</ul>
 				<ul data-role="listview" data-inset="true" data-theme="a">
-					<li>Nicht geladen.</li>
+					<?php show_fehlend($vtp, 1); ?>
 				</ul>
 			</div>
 			<div data-role="collapsible" data-collapsed="true" class=vtp id=day2 >
-				<h2>Dienstag</h2>
+				<h2><?php echo $vtp["vertretungen"]["tag2"]["datum"]; ?></h2>
 				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
-					<li>Nicht geladen.</li>
+					<?php daten_to_list($vtp, 2); ?>
 				</ul>
 				<ul data-role=listview data-inset=true data-theme=a>
-					<li>Nicht geladen.</li>
+					<?php show_fehlend($vtp, 2); ?>
 				</ul>
 			</div>
 			<div data-role="collapsible" data-collapsed="true" class=vtp id=day3 >
-				<h2>Mittwoch</h2>
+				<h2><?php echo $vtp["vertretungen"]["tag3"]["datum"]; ?></h2>
 				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
-					<li>Nicht geladen.</li>
+					<?php daten_to_list($vtp, 3); ?>
 				</ul>
 				<ul data-role=listview data-inset=true data-theme=a>
-					<li>Nicht geladen.</li>
+					<?php show_fehlend($vtp, 3); ?>
 				</ul>
 			</div>
 		</div>
@@ -62,12 +96,11 @@
 			<div data-role="collapsible" data-collapsed="true" id="hinweis">
 				<h2>Zusätzliche Informationen</h2>
 				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="b">
-					<li>Nicht geladen.</li>
+					<li><?php echo $vtp["info"]; ?></li>
 				</ul>
-				<div data-role="collapsible" data-collapsed="true" id="hinweis">
 				<h3>Letze Aktualisierung</h3>
 				<ul data-role="listview" data-inset="true" data-theme="b">
-					<li> Beispiel. </li>
+					<li><?php echo $vtp["letzte_aktualisierung"]; ?></li>
 				</ul>
 			</div>
 		</div>
