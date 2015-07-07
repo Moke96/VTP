@@ -2,13 +2,25 @@
 	/* PHP vertretungsplan generator
 	 * AKA "If you can't fix the problem engineer around it"
 	 */
+
 	/*some functions reused in the rest of the program*/
 	function daten_to_list($vtp, $day) {
 		$a = $vtp["vertretungen"]["tag".$day]["daten"];
 		foreach ($a as $d) {
 			echo "<li>$d</li>\n";
 		}
+		if (true) { //disable this if you do not care about all days having the
+					//same height
+			$longest = 0;
+			for ($i = 1; $i <= 3; $i++)
+				if ($longest < count($vtp["vertretungen"]["tag".$i]["daten"]))
+					$longest = count($vtp["vertretungen"]["tag".$i]["daten"]);
+			for ($i = 0; count($vtp["vertretungen"]["tag".$day]["daten"])+$i <
+				$longest; $i++ )
+				echo "<li> </li>\n";
+		}
 	}
+
 
 	function show_fehlend($vtp, $day) {
 		echo "<li>Fehlende Lehrer:</li>";
@@ -58,7 +70,7 @@
 				</div>
 		<div data-role="main" class="ui-content">
 			<div data-role="collapsible" data-collapsed="false" class=vtp id=day1 >
-				<h2>Montag</h2>
+				<h2><?php echo $vtp["vertretungen"]["tag1"]["datum"]; ?></h2>
 			 	<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
 					<?php daten_to_list($vtp, 1); ?>
 				</ul>
@@ -67,7 +79,7 @@
 				</ul>
 			</div>
 			<div data-role="collapsible" data-collapsed="true" class=vtp id=day2 >
-				<h2>Dienstag</h2>
+				<h2><?php echo $vtp["vertretungen"]["tag2"]["datum"]; ?></h2>
 				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
 					<?php daten_to_list($vtp, 2); ?>
 				</ul>
@@ -76,7 +88,7 @@
 				</ul>
 			</div>
 			<div data-role="collapsible" data-collapsed="true" class=vtp id=day3 >
-				<h2>Mittwoch</h2>
+				<h2><?php echo $vtp["vertretungen"]["tag3"]["datum"]; ?></h2>
 				<ul data-role="listview" data-filter="true" data-input="#suche" data-inset="true" data-theme="a">
 					<?php daten_to_list($vtp, 3); ?>
 				</ul>
