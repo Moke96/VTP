@@ -30,13 +30,8 @@
 	}
 
 	/*pageinit*/
-	$json = file_get_contents("http://localhost/json");
-	if (!$json)
-		die("couldn't fetch data");
-	$vtp = json_decode($json, true);
-	if (!$vtp)
-		die("couldn't decode data");
-
+	include_once "./vtp.php";
+	$vtp = get_vtp();
 ?>
 <!DOCTYPE html>
 <html>
