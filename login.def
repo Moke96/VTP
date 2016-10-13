@@ -1,9 +1,0 @@
-<?php
-/* Username und Password
- * Passwort und Username zwischen den einfachen Anführungszeichen müssen geändert
- * werden. Bitte keine anderen Zeichen einfügen.
- * Vor der ersten Verwendung muss die Datei von "login.def" in "login" umbennant werden
- */
-$username = 'username';
-$password = 'passwort';
-?>
