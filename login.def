@@ -1,0 +1,9 @@
+<?php
+/* Username und Password
+ * Passwort und Username zwischen den einfachen Anf�hrungszeichen m�ssen ge�ndert
+ * werden. Bitte keine anderen Zeichen einf�gen.
+ * Vor der ersten Verwendung muss die Datei von "login.def" in "login" umbennant werden
+ */
+$username = 'Username';
+$password = 'Password';
+?>
